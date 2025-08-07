@@ -1,6 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+//import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+/*
+
 
 async function main() {
   // Create 5 users
@@ -136,3 +137,12 @@ main()
     await prisma.$disconnect();
     process.exit(1);
   });
+*/
+import { runSeeders } from './seeders/index';
+
+runSeeders()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  
