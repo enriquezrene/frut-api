@@ -40,5 +40,31 @@ model Producto {
   descripcion String?
   precio Decimal
   categoria String
+  cajaProductos CajaProducto[]
+}
+
+model Caja {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  nombre     String
+  imagenUrl   String?
+  descripcion String?
+  emoji String?
+  precio Decimal
+  cajaProductos CajaProducto[]
+}
+
+model CajaProducto {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cajaId  Int?
+  productoId  Int?
+  caja     Caja?    @relation(fields: [cajaId], references: [id])
+  producto     Producto?    @relation(fields: [productoId], references: [id])
+  precio Decimal
+  cantidad Decimal
+  unidad  String
 }
 
