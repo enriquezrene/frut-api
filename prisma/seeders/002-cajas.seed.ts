@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 
-export async function seedCategoryProducts(prisma: PrismaClient) {
+export async function seedCajas(prisma: PrismaClient) {
   await prisma.caja.createMany({
     data: [
       {

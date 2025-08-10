@@ -53,11 +53,6 @@ const cajasProductos = [
           "nombre": "Tomates cherry",
           "cantidad": 100,
           "unidad": "g"
-        },
-        {
-          "nombre": "Nueces",
-          "cantidad": 1,
-          "unidad": "unidad"
         }
       ]
     },
@@ -122,26 +117,6 @@ const cajasProductos = [
       ]
     },
     {
-      "nombre": "Mini chef (kids)",
-      "productos": [
-        {
-          "nombre": "Fresa",
-          "cantidad": 1,
-          "unidad": "bandeja pequeña"
-        },
-        {
-          "nombre": "Zanahorias baby",
-          "cantidad": 100,
-          "unidad": "g"
-        },
-        {
-          "nombre": "Queso",
-          "cantidad": 1,
-          "unidad": "unidad"
-        }
-      ]
-    },
-    {
       "nombre": "Fiesta tropical",
       "productos": [
         {
@@ -162,40 +137,10 @@ const cajasProductos = [
       ]
     },
     {
-      "nombre": "Snack de oficina",
-      "productos": [
-        {
-          "nombre": "Mandarinas",
-          "cantidad": 2,
-          "unidad": "unidades"
-        },
-        {
-          "nombre": "Almendras",
-          "cantidad": 50,
-          "unidad": "g"
-        },
-        {
-          "nombre": "Manzana",
-          "cantidad": 2,
-          "unidad": "unidades"
-        }
-      ]
-    },
-    {
       "nombre": "Invierno resistente",
       "productos": [
         {
           "nombre": "Mandarinas",
-          "cantidad": 1,
-          "unidad": "unidad"
-        },
-        {
-          "nombre": "Jengibre",
-          "cantidad": 1,
-          "unidad": "trozo"
-        },
-        {
-          "nombre": "Nueces del país",
           "cantidad": 1,
           "unidad": "unidad"
         }
@@ -265,39 +210,9 @@ const cajasProductos = [
       "nombre": "Good night box",
       "productos": [
         {
-          "nombre": "Pistachos",
-          "cantidad": 1,
-          "unidad": "unidad"
-        },
-        {
           "nombre": "Cerezas",
           "cantidad": 1,
           "unidad": "unidad"
-        },
-        {
-          "nombre": "Almendras",
-          "cantidad": 1,
-          "unidad": "unidad"
-        }
-      ]
-    },
-    {
-      "nombre": "Chef en casa (ensalada césar)",
-      "productos": [
-        {
-          "nombre": "Lechuga romana",
-          "cantidad": 1,
-          "unidad": "cabeza"
-        },
-        {
-          "nombre": "Pollo cocido",
-          "cantidad": 1,
-          "unidad": "pechuga"
-        },
-        {
-          "nombre": "Queso",
-          "cantidad": 100,
-          "unidad": "g"
         }
       ]
     },
@@ -310,11 +225,6 @@ const cajasProductos = [
           "unidad": "unidad"
         },
         {
-          "nombre": "Chocolate",
-          "cantidad": 70,
-          "unidad": "cacao"
-        },
-        {
           "nombre": "Piña",
           "cantidad": 1,
           "unidad": "rodaja"
@@ -323,22 +233,25 @@ const cajasProductos = [
     }
   ]
 
-export async function seedCategoryProducts(prisma: PrismaClient) {
+export async function seedCajaProductos(prisma: PrismaClient) {
 
   const inserts = cajasProductos.map(async (cajaProducto) => {
     const caja = await prisma.caja.findFirst({
       where: { nombre: cajaProducto.nombre }
     });
 
+    //console.log(`Inserting caja: ${cajaProducto.nombre}`, caja);
+
     if (caja) {
       const cajasProductos: { cajaId: number; productoId: number; cantidad: number; unidad: string; precio: number; }[] = []
       const productos = cajaProducto.productos
-      productos.map(async (producto) => {
+      const buscaProductos = productos.map(async (producto) => {
         const existingProducto = await prisma.producto.findFirst({
           where: {
             nombre: producto.nombre
           }
         })
+        //console.log(`Inserting producto:`, producto);
         if (existingProducto) {
           cajasProductos.push({
             cajaId: caja.id,
@@ -349,9 +262,10 @@ export async function seedCategoryProducts(prisma: PrismaClient) {
           });
         }
       })
+      await Promise.all(buscaProductos)
+      console.log(`Inserting cajaProductos for caja ${cajaProducto.nombre}:`, cajasProductos);
       await prisma.cajaProducto.createMany({
         data: cajasProductos,
-        skipDuplicates: true,
       });
     }
   })

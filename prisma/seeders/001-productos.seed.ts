@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 
-export async function seedCategoryProducts(prisma: PrismaClient) {
+export async function seedProductos(prisma: PrismaClient) {
   await prisma.producto.createMany({
     data: [
       {
@@ -25,7 +25,7 @@ export async function seedCategoryProducts(prisma: PrismaClient) {
         "imagenUrl": "https://enriquezrene.github.io/frut-api/images/kiwi.jpg"
       },
       {
-        "nombre": "Manzanas (verdes/rojas)",
+        "nombre": "Manzana",
         "descripcion": "Fruta crujiente, dulce o ácida, una de las más consumidas en el mundo.",
         "precio": 1.00,
         "categoria": "frutas",
@@ -172,7 +172,7 @@ export async function seedCategoryProducts(prisma: PrismaClient) {
         "imagenUrl": "https://enriquezrene.github.io/frut-api/images/brocoli.jpg"
       },
       {
-        "nombre": "Aguacate Hass",
+        "nombre": "Aguacate",
         "descripcion": "Fruta cremosa y nutritiva, con una piel rugosa y de color oscuro.",
         "precio": 1.00,
         "categoria": "vegetales",
@@ -184,6 +184,13 @@ export async function seedCategoryProducts(prisma: PrismaClient) {
         "precio": 1.00,
         "categoria": "vegetales",
         "imagenUrl": "https://enriquezrene.github.io/frut-api/images/tomates-cherry.jpg"
+      },
+      {
+        "nombre": "Tomates",
+        "descripcion": "Tomates redondos y dulces, perfectos para ensaladas.",
+        "precio": 1.00,
+        "categoria": "vegetales",
+        "imagenUrl": "https://enriquezrene.github.io/frut-api/images/tomates.jpg"
       },
       {
         "nombre": "Pepino",
@@ -200,7 +207,7 @@ export async function seedCategoryProducts(prisma: PrismaClient) {
         "imagenUrl": "https://enriquezrene.github.io/frut-api/images/apio.jpg"
       },
       {
-        "nombre": "Zanahorias baby",
+        "nombre": "Zanahorias",
         "descripcion": "Zanahorias pequeñas y dulces, perfectas para picar o acompañar.",
         "precio": 1.00,
         "categoria": "vegetales",
@@ -256,7 +263,7 @@ export async function seedCategoryProducts(prisma: PrismaClient) {
         "imagenUrl": "https://enriquezrene.github.io/frut-api/images/calabaza.jpg"
       },
       {
-        "nombre": "Pimiento amarillo",
+        "nombre": "Pimientos",
         "descripcion": "Pimiento dulce y crujiente, con un color vibrante que añade sabor y color.",
         "precio": 1.00,
         "categoria": "vegetales",

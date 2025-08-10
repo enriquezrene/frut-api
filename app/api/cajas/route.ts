@@ -25,7 +25,19 @@ export async function GET(request: Request) {
   const items = await prisma.caja.findMany({
     skip: offset,
     take: itemsPerPage,
-    orderBy: { nombre: "asc" },
+    include: {
+      cajaProductos: {
+        include: {
+          producto: {
+            select: {
+              nombre: true,
+              precio: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: { id: "asc" },
   });
 
   const totalItems = await prisma.producto.count();
